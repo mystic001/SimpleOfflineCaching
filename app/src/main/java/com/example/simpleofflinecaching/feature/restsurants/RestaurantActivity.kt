@@ -36,9 +36,10 @@ class RestaurantActivity : AppCompatActivity() {
                 layoutManager = LinearLayoutManager(this@RestaurantActivity)
             }
 
-            viewmodel.restaurants.observe(this@RestaurantActivity, Observer { restaurant ->
-                recadapter.submitList(restaurant)
-            })
+
+            viewmodel.restaurantFromRepo.observe(this@RestaurantActivity){
+                //result -> recadapter.submitList(result.d)
+            }
 
         }
 

@@ -1,27 +1,25 @@
 package com.example.simpleofflinecaching.feature.restsurants
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.example.simpleofflinecaching.api.RestaurantApi
 import com.example.simpleofflinecaching.data.Restaurant
+import com.example.simpleofflinecaching.data.RestaurantRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
 @HiltViewModel
-class RestaurantViewModel @Inject constructor(api:RestaurantApi):ViewModel() {
+class RestaurantViewModel @Inject constructor(restaurantRepository: RestaurantRepository):ViewModel() {
 
+      val restaurantFromRepo = restaurantRepository.getRestaurants().asLiveData()
+//    private val restaurantlivedata = MutableLiveData<List<Restaurant>>()
 
-    private val restaurantlivedata = MutableLiveData<List<Restaurant>>()
-
-    public val restaurants: LiveData<List<Restaurant>> = restaurantlivedata
-    init{
-       viewModelScope.launch {
-           val restaurantdata = api.getRestaurant()
-           restaurantlivedata.value = api.getRestaurant()
-       }
-    }
+//    public val restaurants: LiveData<List<Restaurant>> = restaurantlivedata
+//    init{
+//       viewModelScope.launch {
+//           val restaurantdata = api.getRestaurant()
+//           restaurantlivedata.value = api.getRestaurant()
+//       }
+//    }
 }
