@@ -41,7 +41,6 @@ class RestaurantActivity : AppCompatActivity() {
 
             viewmodel.restaurantFromRepo.observe(this@RestaurantActivity) { result ->
                 recadapter.submitList(result.data)
-
                 progressbar.isVisible = result is Resource.Loading && result.data.isNullOrEmpty()
                 errormessage.isVisible = result is Resource.Error && result.data.isNullOrEmpty()
                 errormessage.text = result.error?.localizedMessage
