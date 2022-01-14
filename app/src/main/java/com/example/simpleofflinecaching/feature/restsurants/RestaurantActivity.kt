@@ -5,11 +5,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.ui.AppBarConfiguration
 import android.view.Menu
 import androidx.activity.viewModels
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.simpleofflinecaching.adapter.RestaurantAdapterList
 import com.example.simpleofflinecaching.R
 import com.example.simpleofflinecaching.databinding.ActivityRestaurantBinding
+import com.example.simpleofflinecaching.util.Resource
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -37,8 +39,12 @@ class RestaurantActivity : AppCompatActivity() {
             }
 
 
-            viewmodel.restaurantFromRepo.observe(this@RestaurantActivity){
-                //result -> recadapter.submitList(result.d)
+            viewmodel.restaurantFromRepo.observe(this@RestaurantActivity) { result ->
+                recadapter.submitList(result.data)
+
+                progressbar.isVisible = result is Resource.Loading && result.data.isNullOrEmpty()
+                errormessage.isVisible = result is Resource.Error && result.data.isNullOrEmpty()
+                errormessage.text = result.error?.localizedMessage
             }
 
         }
